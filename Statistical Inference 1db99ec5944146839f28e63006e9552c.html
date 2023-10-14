@@ -1,0 +1,852 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Statistical Inference</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1db99ec5-9441-4683-9f28-e63006e9552c" class="page sans"><header><h1 class="page-title">Statistical Inference</h1><p class="page-description"></p></header><div class="page-body"><p id="fe6ff82c-63bf-4d6d-9ee5-6d4fdb89482a" class="">
+</p><h1 id="77944414-be7b-4b54-9474-ec95b2f85091" class="">P VALUE</h1><p id="44cc79a0-8d7b-4480-872a-78119412c6a9" class="">Given the sample of data what can we infer about the population.</p><p id="8d85ca91-9462-466c-86b7-70bd396bdf59" class="">Within Frequentist there are two different approaches to using the p-values.</p><ul id="c216983e-4366-4e7f-b914-83b7dbfad288" class="bulleted-list"><li style="list-style-type:disc">Fisher- tried to use the p-values are measure of evidence, but to quantify the evidence Bayesian approach and Likelihood Estimation are better approaches</li></ul><ul id="69d28f32-ed6f-45b5-8a5e-285c9bdd796a" class="bulleted-list"><li style="list-style-type:disc">Neyman</li></ul><p id="a851ef53-162d-4df8-9918-658808398f5b" class="">
+</p><p id="3b9486f2-28b8-469a-b7ff-b52c5c4167e4" class="">People often use <em>p</em>-values in a hybrid approach that randomly combines things from the Neyman-Pearson approach and the Fisherian approach, but this has been widely criticized.</p><p id="bd133ee7-196a-4205-9115-b627a3e51ade" class="">
+</p><p id="dd8ceda3-1260-42ab-804a-b3c131eccbe6" class="">
+</p><p id="c3bb2ee4-2407-44c2-ac04-803d2b3fb24d" class="">What should I do?</p><p id="ab7ea711-b799-44c6-8196-ced07ec612d3" class="">What should I believe?</p><p id="692c1680-33a0-415f-8b90-e84744b84fca" class="">What is the relative evidence?</p><p id="6479813a-6094-487e-8bab-40d029fedc8c" class="">
+</p><p id="6eeaa5a1-a6b5-4c99-8609-ad24d97fc2b3" class=""><mark class="highlight-orange"><strong>Path of action: Neyman-Pearson</strong></mark></p><p id="ea60f520-2c1d-487a-82ca-f5148f1be18d" class="">Search for the rules that govern our behavior such that we will not be wrong too often</p><table id="fe56ea68-a323-4f03-9d6c-382bb82b318b" class="simple-table"><tbody><tr id="7206f36b-1d80-440a-8b96-5a729ba2a052"><td id="V`:@" class="">p &lt; alpha</td><td id=":@uQ" class="">Reject H0</td></tr><tr id="b7b8011b-dcbf-4d73-a079-1982968cb0f9"><td id="V`:@" class="">p &gt; alpha</td><td id=":@uQ" class="">Accept the H0*</td></tr><tr id="64b68d99-437a-4d1f-b82f-c2631880378e"><td id="V`:@" class="">*</td><td id=":@uQ" class="">or remain in doubt</td></tr></tbody></table><p id="ec6305d2-fe8f-4b56-9f19-0b49deaa98dc" class="">
+</p><p id="52af79f4-8233-40ae-994c-117081915e31" class="">If we reject H0 for the first condition- we can’t know if we are right or wrong </p><p id="60d94b65-f008-4e40-b542-9b3234c2eb46" class="">
+</p><p id="569e3a1f-abaa-42cf-92dc-afc43d126785" class="">
+</p><p id="2ea7693c-f4e0-463a-9b2b-17637fde9d69" class=""><mark class="highlight-orange"><strong>Path of Knowledge</strong></mark></p><p id="81a3e30c-1cb9-488f-97b4-e463eb80e126" class="">Compare the likelihood of different hypothesis, given the data</p><p id="4b673aaa-05fc-4559-ab9b-7016800823c8" class="">
+</p><p id="3f9661c1-6db8-4d87-8731-bf8131a45f13" class="">
+</p><p id="565db8b6-ddb1-4dad-822f-c4c5517bc2ce" class=""><mark class="highlight-orange"><strong>Path of Devotion</strong></mark></p><p id="fd95d8fb-940b-4ea9-a778-985d5aa088f7" class="">Do you really believe this coin will come up heads 60% of the time? No. You have prior beliefs!!</p><p id="c05a65e9-3cb1-4463-b9ce-d34cbcd00edf" class="">
+</p><table id="129768ed-11cc-4100-afe0-e66f09e88686" class="simple-table"><tbody><tr id="b2a21310-92f5-49c4-a60c-ea51e10b4375"><td id="jEfl" class="">Fisher</td><td id="]CTQ" class="">Neyman</td><td id="wy}Y" class="">Bayesian</td></tr><tr id="65381f52-07dd-4f42-a9f1-df346b349486"><td id="jEfl" class="">p-values</td><td id="]CTQ" class="">Path of action</td><td id="wy}Y" class="">p-values are what you use when you don’t know Bayesian statistics</td></tr><tr id="31989a77-856e-434c-a60d-412b9c9c2c54"><td id="jEfl" class=""></td><td id="]CTQ" class="">alpha and p values to draw inferences from the data.</td><td id="wy}Y" class=""></td></tr></tbody></table><p id="5486719a-59e5-4ab0-89a0-9556414e0d39" class="">
+</p><h2 id="146bf5bf-8d1b-4790-af40-667f29df38a0" class=""><strong><mark class="highlight-orange">P-VALUE</mark></strong></h2><ul id="ab8e2819-9648-406e-bcba-a11659dd5495" class="bulleted-list"><li style="list-style-type:disc">In some sense it offers the first line of defense against being fooled by randomness, separating the signal from the noise.</li></ul><ul id="2640ee56-771b-46d2-8d00-adbe8f9b9cc0" class="bulleted-list"><li style="list-style-type:disc">P value tells you how surprising the data is assuming there is no effect</li></ul><ul id="a624add8-d177-4e03-8c3f-04a69bccd9e2" class="bulleted-list"><li style="list-style-type:disc">Some Visualisations:</li></ul><figure id="3d0eb9de-8a47-4e02-bd41-37a1f3454e4f" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled.png"><img style="width:391px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled.png"/></a></figure><figure id="298195ed-a34a-4e1d-9457-08eb216739d3" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%201.png"><img style="width:391px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%201.png"/></a></figure><ul id="a2eb31ed-8afa-4b89-b5a0-aa537e5a5026" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-brown"><strong>P-Value</strong></mark> is probability of getting the observed or more extreme data assuming the Null Hypothesis is True.</li></ul><ul id="0fa8e102-1aca-4794-a2a6-508278b6b4d8" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red">P-Value is probability of data and not probability of a theory</mark></li></ul><ul id="c81e9ae7-160a-4ffc-a49f-447c986bdb76" class="bulleted-list"><li style="list-style-type:disc">i.e. After p&lt; 0.05 does not mean effect is 95% true</li></ul><ul id="f54dec23-272f-4ed2-a219-77cb7a92de1c" class="bulleted-list"><li style="list-style-type:disc">you cant get the probability that null Hypothesis is true given the data from p-value</li></ul><p id="29b62816-9cf4-45bc-94f7-3d722352de13" class="">
+</p><p id="61f1d783-fc76-49d7-a86f-22f619245549" class=""><mark class="highlight-orange"><strong>If you want to know that Theory is infact True::: NEED TO USE Bayesian Statistics</strong></mark></p><p id="5ab37b7c-aea2-496b-87aa-cc99bafbd617" class="">
+</p><ul id="4dab7532-16dd-4ad1-ae03-96865957a657" class="bulleted-list"><li style="list-style-type:disc">if P value &gt; 0.05- The data we observed is <strong>not surprising</strong>. How do we interpret this data?</li></ul><ul id="f444cb95-178f-4731-ba36-14e3449a3589" class="bulleted-list"><li style="list-style-type:disc">Does not mean there is no true effect. <mark class="highlight-brown"><strong>You need large samples to detect small effects</strong></mark></li></ul><p id="83294db6-7825-4fd4-b62f-acb466588973" class="">
+</p><p id="c04c78c1-1d91-4c6f-a691-c61b66375780" class=""><strong><mark class="highlight-orange">P-Values is the rule to guide behaviour in the long run</mark></strong></p><table id="44526bed-a926-425e-93f5-e34535e18cd2" class="simple-table"><tbody><tr id="f4467119-0743-4418-853b-0d5add54eb0a"><td id="GX]s" class="">p&lt; alpha</td><td id="Ex:b" class="">Act as if data is not noise</td></tr><tr id="c32a3100-ab8c-4680-a54b-e38bdb0e9e84"><td id="GX]s" class="">p&gt;alpha</td><td id="Ex:b" class="">Remain uncertain or act as if data is noise</td></tr><tr id="8d8725dc-70cd-4859-a044-6f811b794363"><td id="GX]s" class=""></td><td id="Ex:b" class=""></td></tr></tbody></table><p id="e82b2aff-9521-4aa3-923e-e79db4839442" class="">When you act as if there is an effect when <mark class="highlight-yellow"><strong>p &lt; 0.05 in long run</strong></mark> you <strong><mark class="highlight-orange">wont be wrong more than 5%</mark></strong> of the time.</p><p id="a038b7ef-ef3d-4491-bf72-d0022ece0021" class="">[Neyman Proposed this!!]</p><p id="f5d46949-fa51-455a-85ce-de5f9d0fb1a8" class="">
+</p><p id="6533fa26-c1d7-4da0-8960-6ed371277d9c" class="">
+</p><p id="917bdf84-a1b0-43f3-bfe6-9a6b2f38e98f" class="">How to answer?</p><blockquote id="91cc3aa7-84cb-42fe-8d89-5bd54bba04c5" class=""><mark class="highlight-gray">We found a p-value &lt; 0.05 so our data . . . . </mark></blockquote><p id="161d1dcf-4c41-421a-b466-407b9f79e8f9" class="">
+</p><blockquote id="3b05912a-0c00-4a37-b0cb-19448206b619" class="">After p value &gt; 0.05 you enter degenerative research line. <mark class="highlight-gray">But, p- values vary:</mark> Think meta-analytically. I need to do a larger study. </blockquote><p id="665c35c9-c974-43bf-a704-31c845897b8d" class="">
+</p><p id="d02052c3-b3f1-4556-8783-294dac9637d8" class="">Fisher- Nothing can be declared as a scientific effect. The P-value can be a reference from where we explore further. Whether the effect is small? Should I increase my sample size?</p><p id="a76d9d67-db2f-4717-944d-84c5e4ccc4a2" class="">
+</p><p id="1f18805b-40d4-48de-b508-890edfadf9af" class="">A single <em>p-</em>value is not enough to declare a scientific discovery; only when we can repeatedly observe something, we can consider it a reliable observation</p><p id="dd2cdbab-0d30-4c3d-9788-c31e9b729acb" class="">
+</p><p id="c59d9831-4ebc-435a-b094-6c1a88ae80bf" class="">
+</p><p id="2e07eaa6-69a7-4a44-89bd-c20c4936475e" class=""><mark class="highlight-gray">Which p-values can you expect when there is a true effect? And when there is no effect?</mark></p><p id="fc7121a7-7d6d-48a0-8d25-02a7c649f822" class="">When there is a true effect the p-value distribution depends on statistical power!</p><figure id="b9a87c2e-f2b9-42e3-872f-e6fa8c907938" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%202.png"><img style="width:391px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%202.png"/></a></figure><figure id="2c5443be-285d-4cd6-a60d-099ac2861005" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%203.png"><img style="width:391px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%203.png"/></a></figure><figure id="032149ec-b214-4303-83a0-d4576a9910ab" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%204.png"><img style="width:391px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%204.png"/></a></figure><p id="e56b710e-6f75-42bf-ac68-44f76303702f" class="">
+</p><p id="dd9d6f4e-2df3-4a13-8133-d80aa0e974b5" class=""><mark class="highlight-gray">Which p-values do you expect when there is no effect?</mark></p><p id="227d65b5-66b2-4e9a-a967-756fc6e507ec" class="">p-values are uniformly distributed!</p><figure id="5b1b1f8e-cf5a-493f-ba18-e111002f442a" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%205.png"><img style="width:391px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%205.png"/></a></figure><p id="88fa0d47-ddaf-4321-b058-54637d8744d7" class="">
+</p><p id="cd9c455e-c5c0-47e6-8eb3-88ee03342467" class="">When Null Hypothesis is true the p-value of 0.03 is just as likely as of 0.97</p><p id="3065dc6a-6875-4a02-a82e-7f6cb85dd758" class="">
+</p><h2 id="56674f83-c504-45e2-8dfe-355d4326a766" class=""><mark class="highlight-orange">Type 1&amp;2 Error</mark></h2><p id="d32af10a-8ac9-4118-8db8-7a77846bd478" class="">
+</p><p id="c3fbcbf4-72dd-4fff-a17c-7e4bf5697d6c" class=""><strong>Errors Control Goal:</strong> Not to make fool out of yourself too often in the long run.</p><p id="0a184109-d241-4a66-ab4d-bc2d06c82f70" class="">
+</p><p id="6d9066ba-012c-4351-814c-4a84f585eae2" class="">Some definitions:</p><p id="48292a1e-3ac5-44ee-b278-36a2ccc252e1" class=""><strong>H0</strong>: Null Hypothesis - No True effect</p><p id="dd9c2bdc-e790-4f43-be65-3b20d81d1cfb" class=""><strong>H1</strong>: Alternative Hypothesis </p><p id="3473aa5b-b077-431d-bcac-481d228818a9" class="">
+</p><p id="2b3c7264-fab3-4914-8957-e09f391acffd" class="">alpha: Probability of significant result when <strong>H0</strong> is true- Type one error</p><p id="1aaf873a-a93b-49c0-b836-6926bde6a7f6" class="">beta: probability of non-significant result given <strong>HA</strong> is true - Type two error</p><p id="6fc67cde-f6c3-4359-ba94-ba6c54248ceb" class="">
+</p><p id="dcb92acc-bb8d-4618-a8ed-b418ea5f40df" class="">1 - beta: Probability of significant result when HA is true- Statistical Power</p><p id="37220836-b9f6-485d-909b-232804102fd3" class=""> </p><p id="f0ebe9b3-50e5-4bfd-91d0-661da004f2b1" class="">Neyman Thinks that error rates are frequentist concepts and they apply in long run. </p><p id="e6d8bb40-9058-475b-8654-8c96e8e6c126" class="">
+</p><figure id="a16c3cc3-88ac-481e-a0e6-17d3e849d7b0" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%206.png"><img style="width:394px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%206.png"/></a></figure><p id="165587f3-14e9-406b-8eaa-9c0e2379d2bb" class="">
+</p><p id="9fdea082-f04f-477b-8384-4110b5012bfd" class=""><mark class="highlight-gray">What will you next study show?</mark></p><p id="758fb790-9b86-427d-8964-12e0e83fe3ab" class="">H0 and HA : 50 % Probability</p><p id="f08d9bcb-5ec0-49df-ae7c-b26eb880821d" class="">alpha = 5% and 1 - beta = 80%</p><p id="4ba3b184-4b17-4ab8-a2d1-1175a7ae9caa" class="">
+</p><figure id="11823381-9134-4e6f-89ed-1bd7f8584a07" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%207.png"><img style="width:388px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%207.png"/></a></figure><p id="91ce0e74-f831-409c-a1a5-6d5a629c027d" class="">
+</p><p id="7dbd23a9-d875-434a-a430-0286772e06ce" class="">The most likely outcome is True Negative = 47.5 %</p><p id="0ecb47e5-206e-40ac-aa32-c11f826d870c" class="">
+</p><p id="39176c99-5572-49e8-af13-385d932c1986" class="">Increase the statistical power:</p><p id="c6f73ae4-6395-4183-81c9-4ca954b7fb97" class="">
+</p><figure id="912e9b37-8748-482b-87ba-34079ea971c4" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%208.png"><img style="width:388px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%208.png"/></a></figure><p id="6a2a80a9-b488-444a-8516-6d8a78684c34" class="">TP is increased but its not too high</p><figure id="95bf3597-df80-437b-a688-be5201472b9e" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%209.png"><img style="width:388px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%209.png"/></a></figure><p id="9f04dcbd-8b33-4913-b025-77f981666b4a" class="">
+</p><p id="e3f03628-309a-40ad-ba77-857ee85aa425" class="">Still there is a problem . Can you find it?</p><p id="d88ece14-4000-423a-80e2-98ad7c2d3f8a" class="">
+</p><p id="1477bad4-68eb-472e-a28c-5446fde689ea" class="">50-50 is problem</p><p id="b2c727e0-8461-4d8c-9bb6-bf83b04f1a0c" class="">Lets examine the Hypothesis that are likely to be true.</p><p id="7d267c43-a778-4eb5-bc71-08e43e5cb384" class="">
+</p><figure id="8339e84d-b8e8-4e11-8d4d-8ca8cc614285" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2010.png"><img style="width:388px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2010.png"/></a></figure><p id="b7b735f7-4a19-49fb-97c0-34dbcf49a29b" class="">
+</p><p id="ef4931a6-7df7-43ae-b6e0-cc657129be09" class=""><a href="https://rpsychologist.com/d3/nhst/">https://rpsychologist.com/d3/nhst/</a></p><p id="89e6c05b-c15d-471b-9a07-187745f9ac9e" class="">
+</p><figure id="ac6496d2-b80a-4afa-934e-0eb5131fd244" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2011.png"><img style="width:1281px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2011.png"/></a></figure><p id="0ae049ec-61a9-4030-a180-ced9d14595bc" class="">
+</p><p id="a113613c-c7fa-4abc-a1ea-9d4bda044ae9" class="">
+</p><p id="171e4668-f593-4884-9f71-1f298a8f6c69" class="">Which error rates should you aim for?</p><p id="98e7f43e-defe-454c-aafb-df7c397c787f" class="">Is it more serious to convict an innocent man[Type One Error] or to acquit the guilty[Type Two error]</p><p id="a0d75792-ddb3-4687-8e40-0c86a9423268" class="">How the balance must be struck to the investigator. </p><p id="bff21f80-11c0-4f2e-966e-0bcc6d7660e8" class="">Cohen recommended 80% power threshold. </p><p id="d7abda3a-365c-4964-8018-a2883c28b9b6" class="">
+</p><p id="344955db-dfce-4665-8800-07c46f441c81" class="">90% threshold in new studies. </p><p id="c01ddf13-8cd9-4d96-b070-b6ac8350aefe" class="">
+</p><p id="fda50c72-dafc-44e9-9177-9a2793c5d91c" class="">High power and Low type two error rates. </p><p id="b343c890-b126-46b5-bf20-fd9940b92499" class="">
+</p><p id="a1dce01f-c2cf-4e7a-8240-b984fde2bde1" class="">
+</p><p id="026abd9d-70d9-4bfe-8091-70de2efd6d32" class="">
+</p><p id="0bb9452c-b284-4971-aba8-792f44d33941" class="">Recently, I&#x27;ve been on a journey to improve my statistical inference skills through some fascinating open source courses. One key concept that stood out to me is the infamous &quot;p-value.&quot; It&#x27;s amazing how easily we can make mistakes in inference when interpreting data.</p><p id="8cfdc183-85ac-4c0d-be1e-cc8a876444cc" class="">🚀 To add a fun twist to this newfound knowledge, I&#x27;ve created a comic that explores the quirky and sometimes spooky world of statistics.</p><p id="b8e02dad-087b-4fe6-9d64-65fe963bab9d" class="">In Part 001 of the comics, I bring to life a imaginative short and entertaining discussion between the legendary statisticians Fisher, Neyman, and Bayes.</p><p id="9ee66746-e62b-4b52-bf5a-a5e120c1a7d6" class="">I hope it brings a smile to your face while shedding light on the intricacies of this subject.</p><p id="85901488-c811-4fc0-afe0-37e048c3e0dc" class="">
+</p><p id="402021c7-2dd1-4fc1-94b3-1e04ba0d1c24" class="">🔗 <a href="https://aps0611.github.io/portfolio/portfolio/paranormal-Discussion01/comics01.html">https://aps0611.github.io/portfolio/portfolio/paranormal-Discussion01/comics01.html</a></p><p id="f56e64f2-e107-43b4-90e8-063fe7656c3b" class="">
+</p><p id="c473c245-0bd2-4496-98da-28c00e4b49d8" class="">
+</p><h1 id="a02ffe7a-9dd1-4bca-8e99-110526666f26" class=""><mark class="highlight-blue">Bayesian and Likelihood</mark></h1><p id="dea71f31-3e9a-4aea-ac9f-d36d5c13e295" class="">
+</p><p id="1e80cb2c-6249-424f-9d6b-01972fcffcfe" class="">How would you define ‘evidence’? It’s not an easy question! One answer is that evidence is necessarily <em>relative</em>. Bayesian and Likelihood tries to quantify the evidence. </p><p id="5856e747-9552-4b48-b0af-8a0b1e2b2dd3" class="">
+</p><p id="11a8ef5c-7d05-49fc-9011-405e75a6e9f3" class=""><mark class="highlight-orange"><strong>LIKELIHOOD</strong></mark></p><p id="47a95eff-fbf0-42c6-8ce4-28ac449f3434" class="">Gives us the function of parameter given the data. </p><p id="ae045e2e-f20b-478c-8ed6-fd257120e435" class="">
+</p><p id="ac184a7e-a7f4-443c-ba7e-b63a6072d0f4" class="">LIKELIHOOD RATIO- We can use Likelihood under H0 /Likelihood under H1 to calculate the Likelihood Ratio. </p><p id="011b84b9-ffd4-4cb2-a649-1e80b0135214" class="">
+</p><figure id="1577ce02-bc5c-4022-9b81-713a2be57ebf" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2012.png"><img style="width:386px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2012.png"/></a></figure><p id="a7687daa-2d2d-40b6-8a96-890d365cea85" class="">
+</p><p id="e27e91fd-88fd-4228-8540-a08a1784c595" class=""><mark class="highlight-brown"><strong>Likelihoods are relative evidence for H1 vs H0 and H1 or H0 might be unlucky.</strong></mark></p><p id="eb842b0c-5e0c-4242-8d8f-7ad6a028611a" class="">
+</p><figure id="654403e4-d9a1-4a69-9f26-36f33c1b097f" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2013.png"><img style="width:432px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2013.png"/></a></figure><p id="3b0132f7-d467-41c1-935c-1d3d7c428f20" class="">Even though we found large ratio. But, we did not find the true result. Thus, its a relative evidence. </p><p id="57bbe90f-f984-4371-90c5-ba6de288dfdc" class="">
+</p><p id="b6f4a68c-4da9-4833-a57b-9643c023f919" class="">Probability of finding the significant results:</p><figure id="73886f66-110f-4c81-9b73-7c390d213796" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2014.png"><img style="width:336px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2014.png"/></a></figure><p id="e4dfb767-5f5f-413e-a68d-d108c61b6fc7" class="">
+</p><p id="ae4c9437-e8cf-419a-a43f-597a62fdd6aa" class="">Multiple studies show given mixed results when H1 is true and 80% power: <strong>0.8 x 0.8 x 0.8 = 0.51</strong></p><p id="e776572b-2a0c-496a-9318-b70ca2448f94" class="">
+</p><figure id="5daeec88-1c95-481d-9129-e2a01e81cab2" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2015.png"><img style="width:480px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2015.png"/></a></figure><p id="7a9e0330-07e6-4a03-8d5c-e262b7f81c32" class="">
+</p><figure id="6f5ebb73-8d99-4901-9145-b79b71f75088" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2016.png"><img style="width:480px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2016.png"/></a></figure><p id="42fa240e-df26-45fe-9c13-877ff68d8431" class="">Most likely that we get mixed results with 0.2 - 0.8 Power</p><p id="8e504f49-c94a-4dfb-800c-36db4ba1be0a" class="">
+</p><p id="a3388220-b529-4067-b83e-77997a0ed06b" class="">
+</p><p id="850176a1-a399-4f11-ab16-dd7b2693313d" class=""><strong><mark class="highlight-orange">BAYESIAN STATISTICS</mark></strong></p><p id="2e6324c6-c3d6-4605-9080-2ab39f3ea29e" class="">
+</p><figure id="d5f8ec4b-d4fb-41da-a904-eb464b9adb17" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2017.png"><img style="width:336px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2017.png"/></a></figure><figure id="002037c7-b399-4c38-9138-36cf88aa321f" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2018.png"><img style="width:336px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2018.png"/></a></figure><p id="203fae29-8448-4d2e-932a-20bb21356d63" class="">
+</p><p id="45643649-230b-48c9-90d1-a3c81f03c1f8" class=""><mark class="highlight-brown"><strong>BAYES Factor</strong></mark>: relative evidence for one model compared to the another. </p><p id="68de88fc-ae13-401f-b0d6-a3f2f3c87b72" class=""><mark class="highlight-yellow">You can never quantify the probability that a hypothesis is true; only the relative
+probability it is true, compared to another hypothesis.</mark></p><p id="05207a4e-61b3-4247-991f-bfb62710052a" class="">
+</p><p id="4092b779-1ab4-44b1-a5c0-55e25e809e7e" class=""><strong>BAYESIAN ESTIMATION</strong>: Instead testing prior and posterior we use prior to estimate the posterior. </p><p id="e01fb41a-a62e-47f9-88c6-ee84322e38bf" class="">
+</p><p id="ba1bf5e5-63ae-4341-b598-ce71043c1572" class=""><mark class="highlight-gray">A single credible interval around mean contains = 95% of the values you find most plausible, based on your prior belief and the data.</mark></p><p id="f261efe3-a2fd-4245-8d1a-4b8a776d6891" class="">
+</p><p id="0c34021d-d435-40a2-b70e-18a610c5ecb9" class=""><span style="border-bottom:0.05em solid"><strong>Absolute Evidence: </strong></span></p><p id="1b42362b-5260-4644-a86e-ecdda9faecf3" class="">In Bayesian statistics, the probability of data under a specified model (D|P(H0) is a number that expressed what is sometimes referred to as the absolute evidence, and more formally referred to as a marginal likelihood.</p><p id="9197c8d9-d949-422c-9e3d-c38ba4b702a3" class="">
+</p><p id="40fe4a25-d245-4db1-8f30-2fdefc330040" class=""><span style="border-bottom:0.05em solid"><strong>Relative Evidence:</strong></span></p><p id="a7b87650-bbab-472f-85c2-660a15030cb2" class="">The relative evidence is calculated by dividing the marginal likelihood for one model by the marginal likelihood for another model. Bayes Factor</p><p id="d4365d03-e65a-4bb1-af4b-0533ea8ade9f" class="">
+</p><p id="5d6b2e06-20d0-429b-805d-2776a2c6d495" class="">In Bayesian statistics, parameters are considered to be random variables, and the uncertainty or degree of belief with respect to the parameters is quantified by probability distributions.</p><p id="41477da2-3109-463c-81d0-d29c779df5ad" class="">
+</p><p id="cfba8f8b-03c4-4be2-9471-20918401d587" class=""><strong>BETA DISTRIBUTION</strong></p><figure id="55f3ba55-cb9d-44ac-8ede-11df65d6dc19" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2019.png"><img style="width:646px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2019.png"/></a></figure><table id="3fc88816-bbe0-4478-837c-f10d126fe159" class="simple-table"><tbody><tr id="a46c4d6d-e8cf-4a92-9487-43b526999b7e"><td id="By;t" class="">The α = 1, β = 1</td><td id="jYHE" class="" style="width:598px">prior is what a newborn baby would have as a prior, without any idea of what to expect when you flip a coin, and thus every value of θ is equally likely</td></tr><tr id="941801d8-5153-452e-8e14-f6faa20d9a7c"><td id="By;t" class="">The α = 1, β = 1/2 </td><td id="jYHE" class="" style="width:598px">prior is what a true believer would have as a prior. The sales merchant tells you the coin will turn up heads almost every time, and thus, you believe it will turn up heads almost every time</td></tr><tr id="e99eb0bc-f3cd-4e52-9e5e-9bb9d632a432"><td id="By;t" class="">The α = 4, β = 4, and the α = 100, β = 100</td><td id="jYHE" class="" style="width:598px"> priors are for slightly and extremely skeptical people</td></tr></tbody></table><p id="70a6c460-c043-4c02-9023-7b38e52c3ac0" class="">
+</p><p id="fffedb21-ff4f-4991-9afc-8be092f729b6" class="">
+</p><figure id="198ca4aa-ca54-4323-8c50-34df54f5ca84" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2020.png"><img style="width:1366px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2020.png"/></a></figure><figure id="945ef1e3-42e8-4e9f-bc82-56850f8f2213" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2021.png"><img style="width:1366px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2021.png"/></a></figure><figure id="75f27d88-391e-48d0-ae95-fe602f200911" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2022.png"><img style="width:1363px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2022.png"/></a></figure><p id="eb88e502-89ef-45ca-be0a-508a08558e91" class="">
+</p><p id="6845df51-bb5d-477f-a133-b2ca46c488b8" class="">High P-Value doesn’t mean that Null Hypothesis is completely unlikely.</p><p id="9b146d59-0e56-4be6-8831-be6c7bc821e3" class="">
+</p><figure id="51bc7b25-9d6f-40d7-a282-9d91874fc8ca" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2023.png"><img style="width:1366px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2023.png"/></a></figure><p id="e3a56b37-ca43-40da-8d0c-eccd6ad0a096" class="">
+</p><p id="864f11e1-3d77-4dbc-859d-9738972f4bdc" class="">
+</p><p id="297ec51c-e9d5-44f0-934b-07ec7ec5f6fe" class="">
+</p><p id="689a8009-3d44-44c2-b62b-c1815a0e4a95" class="">Prior Belief was very high &gt;&gt; Collect the data and find the p-value at 0.05. </p><p id="52c4ddff-62f3-405d-b065-9a056905ac49" class="">started at 75% and after collecting data we are still not convinced!!</p><figure id="6a5f1922-2874-4583-a88c-6f2c9f0e7df1" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2024.png"><img style="width:1363px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2024.png"/></a></figure><p id="998a970d-a8cb-4db8-a81b-5f948dadf4b2" class="">
+</p><p id="655f1b6a-9097-4b03-99c2-6a91f3ab1658" class="">
+</p><p id="7705424d-b2bd-4de5-a81f-35e78842788e" class="">
+</p><h2 id="b63067ac-aee5-465f-ae8d-3802272de5d5" class=""><mark class="highlight-orange"><strong>Error Control</strong></mark></h2><p id="e5ae0772-2428-419c-bc22-6b3c56694fdd" class="">
+</p><p id="da122a3d-a60b-4dd5-85a2-0bbf2c682b4f" class="">Type 1 Error: Say that there is something when actually there is nothing going on.</p><p id="cf098cff-bd41-4a3b-ab6d-05346777758b" class="">
+</p><ul id="d2f65559-002a-468b-8615-777dbbd4a1ad" class="bulleted-list"><li style="list-style-type:disc">Lets set alpha = 0.05 [means 5% of studies in long run where H0 is true there is effect]</li></ul><ul id="7a03fece-6e63-4bba-b56a-1cc552dc3580" class="bulleted-list"><li style="list-style-type:disc">With multiple tests, Type 1 error will inflate.</li></ul><ul id="f84319f5-66a2-4c0e-8d4a-ead86aa29f2e" class="bulleted-list"><li style="list-style-type:disc">In a 2 x 2 x 2 ANOVA: There are 7 tests. Type 1 error rate : 1 - (0.95)^7 = 30%</li></ul><figure id="d41622c5-5365-4be7-9b61-ce7ebdf788f7" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2025.png"><img style="width:1044px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2025.png"/></a></figure><p id="2f72dc51-8afc-4ef9-9845-7e99eecb8ac7" class="">
+</p><figure id="332ca562-fbc1-454b-a640-6ff16ede485b" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2026.png"><img style="width:384px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2026.png"/></a></figure><p id="f8454c91-7974-4e6c-bb30-893e943436f5" class="">
+</p><p id="c5313e15-c17d-4f8c-aeeb-079f97023008" class=""><strong>Bonferroni Corrections:</strong></p><figure id="7552c4ae-82b8-400a-bcee-2bc23f7bc36f" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2027.png"><img style="width:390px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2027.png"/></a></figure><p id="a2901050-cf9a-4526-baa5-24bb0641e7e9" class="">
+</p><p id="b4fec99f-154b-4b27-9a29-71d360ca86b9" class="">After the correction if we plot the p-values distribution then: </p><figure id="1e2d657b-f577-46e8-bd45-c9e8da43e335" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2028.png"><img style="width:387px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2028.png"/></a></figure><p id="c4d5c770-535f-4444-8d96-6cebb129384a" class=""><div class="indented"><p id="bbb92443-fa3f-4a83-8bb5-30758c8dcab7" class=""><strong>Familywise error rate</strong>: Control for all the tests- which lead you to say there is something when there is nothing. </p><p id="00faac70-dedc-4f66-b4c9-b7c3ec99b5ac" class="">
+</p><p id="a7040d52-aa27-4b57-a1cd-89c866b0d9c1" class="">Holm correction. Rank p-values and inverse them. Multiply to get corrected p-value.</p><p id="2770e114-9398-4bf6-9911-78413f586952" class="">
+</p><figure id="3c9871f1-0a7c-45b7-8fbb-09758726739a" class="image" style="text-align:center"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2029.png"><img style="width:392px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2029.png"/></a></figure><p id="6499e55e-e9fe-42e1-b716-c703d5b7ce25" class="">
+</p><figure id="88136668-dc18-45e5-8aa9-78adc768e194" class="image" style="text-align:center"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2030.png"><img style="width:432px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2030.png"/></a></figure><p id="e2470d17-c0e3-459b-9329-57d3ed5219a4" class="">
+</p><p id="26c2b78d-6152-4517-9050-3c7de9014929" class=""><mark class="highlight-brown"><strong>Optional Stopping</strong></mark></p><p id="e9ffe0b9-b516-4f7d-9b40-7585714146c9" class="">Collecting data until p &lt; 0.05 inflates the type 1 error. If we control the type 1 error then this can be an efficient strategy. </p><p id="d49a3c11-fffd-4811-8573-e091e4063b2c" class="">The user could always obtain the significant result through Optional stopping</p><figure id="ece22e57-52e2-47b2-85a0-1d8b0a6db91e" class="image" style="text-align:center"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2031.png"><img style="width:624px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2031.png"/></a></figure><p id="648076c4-30e4-45ce-b3f9-bb7702bf3284" class="">
+</p><p id="f0a2bc05-9eea-4702-a59c-4c72701919a6" class="">Sequential analysis controls type 1 error rates Pocock correction. </p><figure id="0d79f92b-d26e-4dda-b2d8-3bbc1d0a9429" class="image" style="text-align:center"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2032.png"><img style="width:432px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2032.png"/></a></figure><p id="f38b3ef6-7457-4c53-b0ad-526779c01df9" class="">
+</p><p id="7526c357-2897-4945-ba6a-e9bcfcbaf32d" class="">
+</p><p id="2892c5d4-4eab-4dcb-9006-aa8b8a25569b" class="">Type 2 Error: Say that there is nothing when actually there is something going on.</p><p id="69f42c4d-ad30-4fb0-bb21-f7d3789d02f0" class="">
+</p><p id="7ff0af20-6c01-417d-b504-dc23c82922d1" class="">You repeat a study what is chance that you will observe a significant effect?</p><p id="e2b8cab4-abd0-4f08-a0c7-1b2b9b08b61f" class="">
+</p><p id="b20fe77a-da90-435a-b839-393db27d361e" class="">Studies with high power and low type2 error rates are severe tests. </p><p id="48170fd7-d90d-495f-9a21-2bd5d4f95420" class="">
+</p><p id="6c7f4f88-4c14-4200-a066-4531530b2885" class="">
+</p><h2 id="0e80f39e-0a09-49ab-b173-0bd79966ea10" class=""><mark class="highlight-orange"><strong>Effect Sizes</strong></mark></h2><p id="4ddb318d-5b04-4db8-b471-9b94d08c7a2c" class="">
+</p><p id="3b7f5486-7b96-4db7-a573-88bbfbea11c9" class="">Goals:</p><ol type="1" id="ab176631-04fd-419f-9000-1f9ab796c27c" class="numbered-list" start="1"><li>Communicate the <mark class="highlight-yellow"><strong>practical significance</strong></mark> of the results.</li></ol><ol type="1" id="26a1c984-e1c0-4889-bf97-5f8a9bf8015e" class="numbered-list" start="2"><li>Allows the researchers to draw <mark class="highlight-orange"><strong>meta-analytic</strong></mark> conclusions. </li></ol><ol type="1" id="97983926-84ac-45e0-b81d-651a9e82e18a" class="numbered-list" start="3"><li>Effect sizes allow researchers to perform the <mark class="highlight-orange"><strong>power analysis</strong></mark>. </li></ol><p id="fc69e7de-671d-4ace-a73d-76516b6723aa" class="">
+</p><p id="139ee18c-e58c-4ef6-a7be-a4600ccb0864" class="">No true effect size case: CI differs across every sample. </p><figure id="838c984e-0fff-46ca-8ecc-998096944548" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2033.png"><img style="width:525px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2033.png"/></a></figure><p id="cb44c0a5-8264-43af-adc2-c32693cfbfc1" class="">
+</p><p id="15129d79-d216-4657-8cc8-5961a6d12f35" class="">
+</p><p id="405716df-9c55-4532-aea8-882b1cb5876a" class=""><strong>Understanding the effect sizes:</strong></p><p id="ad7c7e90-bffe-4662-8b72-6a5cd1b896a2" class="">Two families</p><table id="a4fc795e-1b3d-46a6-b7c8-0f04086dbda9" class="simple-table"><tbody><tr id="8526bb2b-d5c9-4fba-b5ee-ab664e65a81d"><td id="rm&gt;z" class=""><strong>d family</strong></td><td id="Ys@J" class=""><strong>r family</strong></td></tr><tr id="4114061c-0f49-4b98-a5b9-54b26f3eb0f9"><td id="rm&gt;z" class="">standardized mean differences</td><td id="Ys@J" class="">measures of strength of association</td></tr><tr id="65aaf354-8dc3-42e6-bcb7-c24e82cd2e1d"><td id="rm&gt;z" class=""></td><td id="Ys@J" class=""></td></tr></tbody></table><p id="f37bee03-1866-42ac-9c7d-3400f73a8ff2" class="">large effect size can be theoretically implausible</p><p id="9cd479fe-c40d-46db-8791-1ff30b4821da" class="">
+</p><p id="0365250d-f06a-4dda-8925-e40ed2ca34e6" class="">
+</p><p id="2ad39785-b388-453f-b59a-3fb52c0e51e2" class=""><mark class="highlight-blue"><strong>COHEN D</strong></mark></p><p id="761ecf17-09fe-43bf-82ac-2df08471b298" class="">Do movie ratings differ between websites? and so by how much?</p><figure id="a7766a97-18b4-48c7-9e75-71b64c2de8f4" class="image" style="text-align:center"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2034.png"><img style="width:379px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2034.png"/></a></figure><p id="5d211dea-0c53-4a5a-ba7a-231725b14970" class=""><em>Is it meaningful?</em></p><ul id="3c89772e-f624-4406-b13b-d13763e56e03" class="bulleted-list"><li style="list-style-type:disc">Mean Difference = IMDB - TOMATO METER = 8.9 - 7.3</li></ul><ul id="c5436446-11f4-427a-84a5-64a838b25da0" class="bulleted-list"><li style="list-style-type:disc">SD of all movie reviews are around 1.4</li></ul><ul id="80f62d76-291b-415e-801c-29298947e18c" class="bulleted-list"><li style="list-style-type:disc">Effect size = 8.9 - 7.3 / 1.4 = 1.14</li></ul><ul id="e3f6ef55-6046-43f0-840c-01470ac5dbf1" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-purple"><strong>Cohen D ranges from 0 to INF</strong></mark></li></ul><p id="0e620ac2-a1b5-4b01-836d-056ec151e244" class="">
+</p><p id="a01fdbdd-1822-4b0b-b37b-cdd27d4468d0" class=""><strong><em>Benchmarks </em></strong>[Only last resort]</p><table id="b40a8c24-8e58-438f-b60a-2808971f61b6" class="simple-table"><tbody><tr id="ab69fd94-dc6e-418b-93fc-7370d4341a4e"><td id="G?`r" class="">Small Effect</td><td id="Z&gt;Zb" class="">0.2</td></tr><tr id="e9c066b0-8f4f-4ee7-afb4-3bc171e2ee43"><td id="G?`r" class="">Med Effect</td><td id="Z&gt;Zb" class="">0.5</td></tr><tr id="74f59140-97e7-4d1f-b6ef-8d745d0b9796"><td id="G?`r" class="">Large Effect</td><td id="Z&gt;Zb" class="">0.8</td></tr></tbody></table><figure id="8d1a3e25-820a-4671-880c-e2b5310d32e1" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2035.png"><img style="width:695px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2035.png"/></a></figure><figure id="01f93106-1a83-48d5-ad23-e8606025667b" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2036.png"><img style="width:701px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2036.png"/></a></figure><figure id="7567451e-f765-4413-9d25-8d0a6227f527" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2037.png"><img style="width:718px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2037.png"/></a></figure><p id="16f987ea-e8ef-41ae-a317-bfd518de0982" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f556cea0-e2f3-49a9-a8dd-cf2d90c834f0"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">COHEN D = MEAN DIFF / SD</div></figure><p id="5653029e-9eb5-4bd1-bd58-09fcadd53df9" class="">
+</p><figure id="f6f40f8f-cd50-492f-95dc-48b913cac1fa" class="image" style="text-align:center"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2038.png"><img style="width:377px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2038.png"/></a></figure><p id="f45edd90-9ec5-4866-b774-72b0b19972e9" class="">
+</p><p id="b7a905d1-e766-4199-9167-3f933d05b0f0" class="">d can also be calculated as :
+</p><figure id="73bf0b24-af50-4ed8-bb71-b69d151ca6bf" class="image" style="text-align:center"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2039.png"><img style="width:378px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2039.png"/></a></figure><figure id="48003a7e-d0d2-4968-8785-96ea5ebe55f3" class="image" style="text-align:center"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2040.png"><img style="width:374px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2040.png"/></a></figure><figure id="2884713b-2b32-4fc0-981b-ecd840d00a9a" class="image" style="text-align:center"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2041.png"><img style="width:335px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2041.png"/></a></figure><p id="ca3e6335-cd07-4a5a-8eaa-8d855875d40a" class="">
+</p><p id="37652ec1-82dc-47b6-982f-251194e26505" class="">
+</p><p id="c1385240-c9e5-4abf-a819-76028bcb0ed3" class=""><mark class="highlight-blue"><strong>Correlation (R Family)</strong></mark></p><p id="bb82d3a4-55e4-43b1-b402-3b97db4eac84" class="">Chocolate consumption is related to winning the Nobel prizes</p><p id="cfd9f5cb-114e-478c-aa31-f4117662bda2" class="">The effect size of 0.8 is really huge. </p><p id="006b5de0-be91-4caf-8de5-53ec3e4dba3b" class="">
+</p><p id="058c6f28-48b8-4bc7-ad43-9d0f017d6c93" class="">Benchmarks</p><table id="c4ef3ddd-f8bc-4e12-a428-a154acd8b7d1" class="simple-table"><tbody><tr id="874838aa-b327-4945-8fbd-6a51688179e1"><td id="k~I~" class="">small</td><td id="hTp~" class="">0.1</td></tr><tr id="7ad251bd-c926-403f-a2e1-437e161af707"><td id="k~I~" class="">medium </td><td id="hTp~" class="">0.3</td></tr><tr id="d9e51358-f9b3-4b46-9ad8-d213c8f77e6f"><td id="k~I~" class="">large</td><td id="hTp~" class="">0.5</td></tr></tbody></table><p id="7dd98275-e68d-4474-85b4-ff49e1cfb24d" class="">
+</p><p id="7ddc3f8a-4c47-4258-a881-bfee25c9af4b" class=""><strong>CONVERSION</strong></p><figure id="bf366841-ca63-42e4-a125-c07fb0a59032" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2042.png"><img style="width:494px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2042.png"/></a></figure><figure id="edaeef01-c913-4526-bc76-f6a5b6acce96" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2043.png"><img style="width:954px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2043.png"/></a></figure><p id="ee4e7e80-5a1f-4a06-8ce3-e5d0bfdc5523" class="">
+</p><p id="99bf1bdc-6a9b-4776-bd32-27f83f92ac95" class="">
+</p><h2 id="60ce8025-8fc6-4000-848c-626142377c59" class=""><mark class="highlight-orange"><strong>Confidence Intervals</strong></mark></h2><figure id="e3894f69-143c-4615-bbad-5ac38b460c47" class="image" style="text-align:center"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2044.png"><img style="width:497px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2044.png"/></a></figure><p id="871691fa-9cc5-44b5-9248-99a807130c52" class="">Whenever you estimate from sample the parameter for population, there is always some element of uncertainty. </p><p id="995913ec-68d6-4f03-b49c-479f4bbfe7cf" class="">
+</p><p id="206733b1-64d6-447f-b388-64569998cdc2" class="">Confidence intervals are a statement about the percentage of <strong>confidence intervals</strong> that contain the true parameter value.</p><figure id="f9d4385e-2c84-40f1-969f-8a83948309ee" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2045.png"><img style="width:823px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2045.png"/></a></figure><p id="e7c8c398-fbc2-4ac4-aacf-4fc28120c7e0" class="">Black lines represents the confidence intervals. The red lines do not represents the parameter value. </p><p id="397fbeaa-0ba8-4815-a768-e4269c5bcff2" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="b7f50117-6403-4a30-a41b-61bed4ceddab"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><strong>95 % of future 95% confidence intervals will contain the true population parameter [In long run]</strong></div></figure><p id="a144cf07-023b-4e2a-9f4a-6bfa6df7e6c0" class="">
+</p><p id="1789506b-bd93-4e14-af80-f66d7ea51216" class="">Most commonly we calculate the confidence intervals around <strong>mean or effect sizes</strong>. </p><p id="1ce3c092-8516-4650-94b3-668222752eca" class="">
+</p><p id="61956c48-4677-4d39-9ba6-557ba2ee9397" class="">For 95% CI:</p><figure id="72e0465c-421d-45b6-8301-708160227837" class="image" style="text-align:center"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2046.png"><img style="width:508px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2046.png"/></a></figure><figure id="404dcdae-69ea-4657-bae7-847b7f61e09a" class="image" style="text-align:center"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2047.png"><img style="width:504px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2047.png"/></a></figure><figure id="118ddc30-3012-4e78-b0a3-c99c0ab21b8d" class="image" style="text-align:center"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2048.png"><img style="width:692px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2048.png"/></a></figure><p id="550878c5-ce88-46cd-adbf-305475c2f74c" class="">CI becomes narrow as we increase the sample size. </p><p id="737f20ca-a352-4d8e-bb1e-7d5f701303db" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="cfd1bb0e-c8a5-4057-9239-654b402cd212"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">CI and p-values are directly related. If single CI does not contain 0 then p &lt; 0.05</div></figure><p id="688ca575-98d6-475f-a75f-f6ffbeafdc69" class="">
+</p><figure id="450c4513-595f-4388-b3c4-cd627496dea8" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2049.png"><img style="width:1226px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2049.png"/></a></figure><figure id="d87e83e9-3b60-4ea5-91e2-b08fa535edd7" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2050.png"><img style="width:1243px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2050.png"/></a></figure><p id="b781f976-83b7-4def-85f1-612cc5257a27" class="">Confidence intervals tell you something about what happens in the long run; <strong>Credible
+intervals quantify 95% of values you find most plausible.</strong></p><p id="14c907d1-615f-4df0-98ab-abcfcbd74dc8" class="">
+</p><p id="75cd2c5d-f56a-4fc0-ad24-cce6f75868e2" class="">
+</p><p id="1c3f4493-24e8-4f28-8c4d-ecb21f2c74a9" class=""><mark class="highlight-brown"><strong>Sample Size Justification</strong></mark></p><p id="d2a6a6b4-7d63-48c4-b66d-ee665f2974c8" class="">How to determine the sample size for new study?</p><p id="3ae0f024-abfb-4f14-b935-f65b2d64eb8f" class="">
+</p><p id="16f67ea8-ec9a-45bb-bc47-c4f9accb620b" class="">Small Samples have Large Variations and more Type2 error rates and inaccurate estimates. </p><figure id="31b256fe-2628-42e6-8d95-35aef85e6d1e" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2051.png"><img style="width:617px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2051.png"/></a></figure><p id="514c43a1-f3e3-4d29-a7e0-4c0c93945a85" class="">Large Sample size: more accurate estimates and higher power. </p><p id="97667c75-e19e-420e-9ab9-9b903202eb18" class="">
+</p><figure id="2fe8f0c6-c402-48d6-b39f-6b9d8839df03" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2052.png"><img style="width:590px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2052.png"/></a></figure><figure id="8e787e14-a669-4035-b140-78d17352fc5e" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2053.png"><img style="width:570px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2053.png"/></a></figure><p id="5fa04533-01eb-436b-b0db-f5137592f368" class="">
+</p><p id="81239397-8c19-4a3a-b649-56bb9e34c395" class="">Approach:</p><ol type="1" id="08e946c3-e326-4ff0-b8c9-3c6f0cc9affe" class="numbered-list" start="1"><li><strong>Planning for accuracy</strong>: Select Confidence Sample size based on <mark class="highlight-yellow">width of the confidence interval. </mark></li></ol><ol type="1" id="608b501b-ea2e-40fe-bddf-a2acaee1722d" class="numbered-list" start="2"><li>Design the study so that it will have <mark class="highlight-yellow">specific statistical power</mark>. Select sample size based on probability of finding p &lt; 0.05</li></ol><ol type="1" id="3612d851-3ca6-48f7-ad37-b14eb6f925b5" class="numbered-list" start="3"><li><mark class="highlight-yellow">Planning for feasibility</mark>- Select sample size based on time, money, participants you have available. </li></ol><figure id="4585b98c-812f-4b9c-aafd-174895605b6e" class="image" style="text-align:center"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2054.png"><img style="width:528px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2054.png"/></a></figure><figure id="d21962be-4be4-4187-9bba-067e37b2140e" class="image" style="text-align:center"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2055.png"><img style="width:576px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2055.png"/></a></figure><figure id="e0f97cc5-d4c4-4402-b21b-4bc427ff0c25" class="image" style="text-align:center"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2056.png"><img style="width:384px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2056.png"/></a></figure><p id="0f0de37e-88fb-4396-82e6-de285d08f7a8" class="">
+</p><p id="2c1d86ee-5055-40d0-b4d4-6e6fea634093" class="">
+</p><p id="13e5bcc6-c499-4904-bc82-3cf446cc466b" class=""><mark class="highlight-yellow"><strong>P-Curve Analysis - </strong></mark><mark class="highlight-brown">Test whether a set of p-values have evidential value</mark></p><p id="6376e70f-52c8-4174-b4a1-6f9b7eb811c0" class="">What does p-values look like when there is no true effect = 0</p><p id="6e112ae8-2848-44f0-88a6-4f26a787b40b" class="">
+</p><figure id="dc85e91e-9e27-4186-9dc2-4bf8ccbbb381" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2057.png"><img style="width:327px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2057.png"/></a></figure><p id="d30eea55-77b0-4159-ad69-14036d051880" class="">
+</p><p id="93595169-f240-4cb2-b1e9-9c28ebecd354" class="">What does p-values look like when there is a true effect?</p><p id="f5202e9c-9b4a-4b1f-b530-8489a60b946f" class="">
+</p><figure id="e0fa0e99-f7a2-4d0d-95ae-3337f0c2c0f0" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2058.png"><img style="width:588px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2058.png"/></a></figure><p id="8a564fd9-089e-4ca3-8f06-7bed78baf8d6" class="">Small p-values are more likely. </p><p id="3d5d4b5d-107b-4583-9507-5a424c5cd2a0" class="">
+</p><p id="dfede6c1-c4a4-4919-9f3d-51702b765782" class="">Question we try to answer using the p-curve analysis- Does the p-curve distribution looks like one with or without the effect?</p><p id="05e2bd27-78f3-4eb1-8c08-4c60632716ad" class="">
+</p><p id="3cc924c3-f8a1-4893-bc00-1183680f42d4" class="">No true effect<div class="indented"><ul id="1a8c4fde-d8d6-4e59-bf6c-642911c8ba4a" class="bulleted-list"><li style="list-style-type:disc">Not right skewed</li></ul><ul id="a0437f90-c189-43ad-a254-4131b2941cfd" class="bulleted-list"><li style="list-style-type:disc">Completely opposite</li></ul></div></p><figure id="f3062677-0b54-4dd7-9c38-8058b354e389" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2059.png"><img style="width:1242px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2059.png"/></a></figure><p id="704b860b-e9f1-41de-9251-ccf7887dc7f6" class="">
+</p><p id="8de5fd8b-f4b5-42cb-bb7f-24df57406bdf" class="">
+</p><figure id="2d48fd42-68df-41c8-8a9d-7ad6222be2df" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2060.png"><img style="width:672px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2060.png"/></a></figure><p id="f9632085-5265-4b2b-981e-93267b981e24" class="">
+</p><p id="1440b4af-a2b2-4fa2-96bd-ed3ece51bfe9" class="">
+</p><p id="c12e12ec-123f-4637-a1b8-e651457a48bc" class="">
+</p><p id="9bc91b0e-985f-41a2-b5b2-9297fa35d0f1" class="">
+</p><h2 id="108e8eea-28e5-46b9-8a08-e0cd9bf8c1db" class=""><mark class="highlight-orange">The Philosophy of Science</mark></h2><p id="7913992a-08aa-45b5-b85c-95ab0f1596c2" class="">
+</p><p id="3f06964f-28ab-459f-a31f-9b7f49a98d5c" class="">What differentiates science and pseudoscience?</p><p id="5d827054-f316-4a4a-adf5-27cae8eeaa2d" class="">
+</p><p id="254c4ecb-c95d-4230-9f68-7b74edd88675" class=""><strong>Modus Tollens:</strong><em> If theory then data. Not data Therefore not Theory. </em></p><p id="0597b8f2-7314-43d1-9378-ab3d1927d336" class=""><strong>Affirming the consequent</strong>: <em>if p then q, q therefore p</em> </p><p id="a43c5ee8-e285-4635-869b-f5e378bd420f" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="23af2e51-2bb4-4ae6-827e-36b3544384d1"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">A theory can be either refuted or corroborated but never proven. </div></figure><p id="e06a29db-9b9b-4398-92be-8a73ce8b341a" class="">
+</p><p id="1a3b96d9-70db-45c8-a60f-8a3bad4d37a0" class="">When there is data against the theory its okay not to falsify the theory. The theory might hold good in some applications and not in other. </p><p id="6c015bc3-a8c1-4333-9e5e-abf4ba0da6fe" class="">
+</p><p id="418a0f22-388c-4120-a5c6-45187caf082e" class="">What is falsified then? The theory? or the assumptions or background info?</p><p id="9ecb03d7-a6f5-4c62-9c9b-cd5485b98802" class="">We can always change some assumptions. We can make some adhoc assumptions- only if. </p><p id="44f43f1e-e28b-486d-9812-4b36dd840724" class="">
+</p><figure id="4f6ac39e-f00b-4386-922e-b77ec65d394c" class="image" style="text-align:center"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2061.png"><img style="width:507px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2061.png"/></a></figure><p id="e1865b9b-ce96-408a-8780-c19eb3e56747" class="">You perform a study where you predict a manipulation will increase participants’
+performance on a test. You conclude, based on the statistical tests, that this
+effect exists only for men, but not for women. This is an example of:</p><p id="b80f8fcd-08e4-4e69-ba78-b1121347a391" class=""><mark class="highlight-pink"><strong>A degenerative research line</strong></mark>: An ad-hoc assumption is made that the effect only
+exists for men</p><p id="3d397040-1130-436a-ace1-6cd0d34489b4" class="">
+</p><figure id="071f80ee-223e-4472-83a0-7bcc3bf9aeab" class="image" style="text-align:center"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2062.png"><img style="width:511px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2062.png"/></a></figure><p id="50e6ca75-847a-4544-b304-e7ed4a521b00" class="">A <mark class="highlight-purple"><strong>progressive research line</strong></mark>: A new fact is predicted from the data.</p><p id="3ab4e563-162e-4d19-8d23-5c2209872886" class="">
+</p><p id="5d6a90b0-53f2-43e4-9a0a-299f98205d63" class="">
+</p><p id="97819958-c0f0-4e10-a514-e3cb0f15c666" class="">
+</p><p id="8a41f215-31fb-4fc0-b514-15f3edc2f5eb" class=""><mark class="highlight-brown"><strong>The Null is always false</strong></mark></p><p id="c9f15623-b79d-49ba-a50e-b2ebe7f60923" class="">Which hypothesis should we test. There are people who say testing the null is so boring as null is always false. Null Hypothesis testing is often used and criticized. </p><p id="001a3473-03f7-41ef-be2d-9e462264acfb" class="">
+</p><p id="76f4f5a6-e932-437b-bc91-07b63a64729d" class="">With large sample size(&gt;5000) some effects are pretty darn close to zero. </p><p id="ee44688d-2534-4b16-a8b3-887ebe671673" class="">
+</p><p id="99bcb042-40b3-41a3-9a05-e5b67f123e9b" class="">What’s the difference between the Crud Factor and Type 1 errors?<strong>
+Crud is systematic noise (there are true effects that you are not interested in),
+Type 1 errors are variable noise (no true effects).</strong></p><p id="1bcf0a29-b311-48e3-adad-2c41937fc7e8" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="9decf1fd-fb7e-4f2d-b69a-649b375944f7"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">All models are wrong but some models are useful. - George Box</div></figure><p id="7e2295f6-38e1-4659-94dd-a428a5c4f64a" class="">After randomization the null can be a useful and a true hypothesis. Without randomization, alternative is not a bold prediction. </p><p id="2fd20ad9-1205-428d-b1bc-968eea9b8688" class="">Null hypothesis is a weak hypothesis: It will rain in September</p><p id="7a5af846-c1e4-4599-a440-acea7f4301a3" class="">Strong Hypothesis: It will rain 7mm on 7th Sep</p><p id="9344fc01-951f-4b53-a7ea-ff5e81066724" class="">
+</p><p id="532490cc-2191-4d3f-9123-f815c891db2e" class="">NHST: Null Hypothesis significance testing rejects the null compared to any alternative. Point predictions are rare. </p><p id="96630593-700d-442c-b406-b1accff7adc8" class="">
+</p><p id="ab1a8460-498e-48e3-857b-912d2febd6cc" class=""><mark class="highlight-yellow"><strong>Theory Construction</strong></mark></p><figure id="0b470333-d452-4704-9564-dbb75bd6546b" class="image" style="text-align:center"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2063.png"><img style="width:513px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2063.png"/></a></figure><p id="9bded2a6-d31c-47b4-983f-84bfcbfec633" class="">
+</p><ol type="1" id="2fe33b7c-9667-4144-b39a-234383346f25" class="numbered-list" start="1"><li>Personal experiences</li></ol><ol type="1" id="6da173c3-fc65-4819-95a3-c2090f82c82d" class="numbered-list" start="2"><li>Empathize- Put yourself in someone else shoes</li></ol><ol type="1" id="4a9f9bd7-5b31-4a5b-92e6-e58a90160009" class="numbered-list" start="3"><li>Observe</li></ol><ol type="1" id="c222c5e0-fc42-4df6-894d-c18ff68b15ac" class="numbered-list" start="4"><li>use metaphor</li></ol><ol type="1" id="c69a871f-fdc2-4ec6-b091-c509d6d5f6cc" class="numbered-list" start="5"><li>Ask why and how like 3 year old?</li></ol><ol type="1" id="bc89f357-aeac-4a83-9228-60db57e096d7" class="numbered-list" start="6"><li>have broad interests- movies, books, etc..</li></ol><p id="2cf07f80-42ab-4f2f-84f8-aaa837cf141b" class="">
+</p><p id="fd6fca97-6b2b-4072-a3ce-39442e9ed386" class="">
+</p><p id="8200ed98-eb9c-4c69-a669-3354be06943b" class="">
+</p><h2 id="ee0063b9-ab1e-47de-8995-df64fc9dcd6c" class=""><mark class="highlight-blue"><strong>REPLICATION</strong></mark></h2><p id="20df8066-656d-40f4-b2b9-799129966cfa" class="">
+</p><p id="dbbcd3e2-220a-4115-a931-382f37fa7e94" class="">Replicate the original observation so that the effect can be observed independently. </p><p id="b0ad4fa4-29c1-43cc-bf70-ea4c17dde64d" class="">
+</p><p id="551944e8-9bd7-4d5e-bb35-c702f0e96c60" class="">Goal 1 : Identify the Type 1 error</p><p id="9675024f-7e7a-4438-a334-1401902652aa" class="">Goal 2 : Control the artefacts (lack of internal validity)</p><p id="f3db91ed-605c-4fe2-bdcb-97b1cde18e2a" class="">Goal 3 : Generalize to new populations</p><p id="85242263-fe7f-44ce-a636-00877d85fada" class="">Goal 4 : Verify the underlying Hypothesis</p><p id="31e040e2-0801-4f61-b618-a15384ccbd80" class="">
+</p><p id="e5eced54-7168-4451-a910-d9796a61c564" class="">
+</p><p id="72245c61-c789-413d-b4bd-64bfe2a1780a" class=""> </p><figure id="37644e54-8953-485c-981f-6e32ea2b49ef" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2064.png"><img style="width:1031px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2064.png"/></a></figure><p id="3fd37b79-2078-4678-9b4a-7b87b5d4846e" class="">
+</p><p id="6cf0b101-959e-4ff1-97aa-eda9f59d6a57" class="">failed replication ≠ Failed theory</p><p id="1b3daea6-589d-4727-8d1a-518a2dc3adc5" class="">
+</p><p id="0a06f0ea-9846-4317-ba2e-8093772d7eb2" class="">Low power, high p-value , surprising results : Doubt the original finding. </p><p id="5db0b8a5-1817-497d-8fb6-bb12dba787ce" class="">
+</p><p id="dcd42c12-134a-4830-a290-f9ad0da386a5" class="">
+</p><h2 id="5a6c38bc-2380-4973-8398-a3347e56a0f7" class=""><mark class="highlight-blue"><strong>PUBLICATION BIAS</strong></mark></h2><p id="6d090a9a-7842-4fd2-b657-a57a89b883c3" class="">
+</p><p id="900a7988-91ec-44cc-beb9-a454dfc4f446" class="">Big problem of p-value: Use of them as thresholds to publish. </p><p id="db7f4aad-03f5-4e2a-99fa-9094596db972" class="">
+</p><figure id="91911b86-effd-4141-801e-9698c45719bb" class="image"><a href="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2065.png"><img style="width:516px" src="Statistical%20Inference%201db99ec5944146839f28e63006e9552c/Untitled%2065.png"/></a><figcaption>Missing literature</figcaption></figure><p id="9b1f54c3-205d-463d-9374-6ba4b7ebb7ae" class="">
+</p><p id="c7ea4adc-b327-4547-a800-e864de6359d9" class="">
+</p><p id="5cb4e239-b138-4770-a791-3b9620723d9d" class="">
+</p></div></p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
